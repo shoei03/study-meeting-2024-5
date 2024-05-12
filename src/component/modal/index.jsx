@@ -1,14 +1,20 @@
+import React, { useState } from "react"; //ここでuseStateをimport
 import styled from "styled-components";
 
 export const Modal = () => {
+  //useStateを定義。showModalが状態を表す変数, setShowModalがshowModalを更新する関数
+  const [showModal, setShowModal] = useState(true); //デフォルトでshowModalはtrue
+
   const handleYesClick = () => {
-    window.location.href = "https://example.com"; //好きなリンクを設定する
+    window.location.href = "https://example.com";
   };
 
-  const handleNoClick = () => {};
+  const handleNoClick = () => {
+    setShowModal(false); //Noをクリックすると、showModalをfalseにセットする
+  };
 
   return (
-    <StyledModal>
+    <StyledModal showModal={showModal}>
       <StyledText>リンク先に飛びますか？</StyledText>
       <StyledBottuns>
         <StyledBottun onClick={handleYesClick}>Yes</StyledBottun>
@@ -25,6 +31,12 @@ const StyledModal = styled.div`
   padding: 0 10px 10px;
   background-color: #b6e1fb;
   color: #292c2d;
+  display: ${(
+    props //渡されたプロパティをpropsに格納
+  ) => 
+    //propsが持つshowModalという値 = props.showModal
+    //三項演算子でスタイルを分ける
+    props.showModal ? "block" : "none"};
 `;
 
 const StyledText = styled.p`
